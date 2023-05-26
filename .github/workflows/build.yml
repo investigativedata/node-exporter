@@ -1,4 +1,4 @@
-name: Build aleph
+name: Build container
 
 on:
   workflow_dispatch: {}
@@ -12,11 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/checkout@v3
-        with:
-          repository: investigativedata/node-exporter
-          ref: config/elasticsearch
-          path: aleph/aleph
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Docker meta
@@ -41,7 +36,7 @@ jobs:
       - name: Build and push release
         uses: docker/build-push-action@v3
         with:
-          context: ./aleph
+          context: .
           # platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
